@@ -1,0 +1,7 @@
+LIBRARY
+EXPORTS
+	DebugExtensionInitialize
+	help
+	pslist
+	dlllist
+	psdetails

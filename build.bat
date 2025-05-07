@@ -1,0 +1,1 @@
+msbuild .\DbgExt.sln /p:Configuration=Debug 
