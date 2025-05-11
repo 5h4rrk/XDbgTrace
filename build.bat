@@ -1,1 +1,1 @@
-msbuild .\DbgExt.sln /p:Configuration=Debug 
+msbuild .\DbgExt.sln /p:Configuration=Release 

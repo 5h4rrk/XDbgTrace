@@ -168,7 +168,7 @@ typedef struct
   u64 VirtualSize;
   u64 PeakVirtualSize;
   u64 NextProcess;
-  u64 ActiveThreads;
+  u32 ActiveThreads;
   LARGE_INTEGER CreateTime;
   u64 Peb;
   char process_name[16];
