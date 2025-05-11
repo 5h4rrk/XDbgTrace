@@ -58,10 +58,16 @@ STDAPI pslist(IDebugClient *client, PCSTR args)
     return S_OK;
   }
 
+  if (args != nullptr)
+  {
+    check_args(args);
+  }
+
   if (!processList.empty())
   {
     displayBanner();
     displayEntries(TRUE);
+    parsepslist(FALSE, (LPSTR) "");
     return S_OK;
   }
 

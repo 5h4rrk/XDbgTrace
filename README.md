@@ -18,14 +18,17 @@ Download the [DbgExtension.dll](x64/Release/DbgExtension.dll)
 
 ```bash
 : kd> !pslist
-Process            Process Name           PID    PPID   Threads		VS(MB)		PVS(MB)              CreateTime
+0: kd> !pslist
+Process            Process Name           PID    PPID   Threads		VS(MB)		PVS(MB)              CreateTime(UTC+0)
 =====================================================================================================================
-0x00000000b8884040  System                4      2        164      3       		14      		2024-10-12 12:19:30.253             
-0x00000000b88cb080  Registry              108    6        4        90      		125     		2024-10-12 12:19:18.884             
-0x00000000baaf4040  smss.exe              344    6        2        2101287 		2101295 		2024-10-12 12:19:30.257             
-.........
-.........
-0x00000000c42ec0c0  conhost.exe           1372   3262     7        2101400 		2101400 		2024-10-12 12:57:57.508             
+0xffffc509b8884040  System                4      2        164      3       		14      		2024-10-12 12:19:30.253             
+0xffffc509b88cb080  Registry              108    6        4        90      		125     		2024-10-12 12:19:18.884             
+0xffffc509baaf4040  smss.exe              344    6        2        2101287 		2101295 		2024-10-12 12:19:30.257             
+0xffffc509ba45c140  csrss.exe             456    446      10       2101335 		2101337 		2024-10-12 12:19:31. 1              
+0xffffc509bc17d080  wininit.exe           532    446      2        2101314 		2101326 		2024-10-12 12:19:31.135             
+0xffffc509bc16f080  csrss.exe             540    526      13       2101363 		2101371 		2024-10-12 12:19:31.140               
+......
+......
 ```
 
 - ***dlllist***: This command will list all loaded DLL files for each process. It enumerates the `_PEB` structure of each process, accesses the `_PEB_LDR_DATA`, and traverses the `InLoadOrderModuleList` to retrieve loaded modules.

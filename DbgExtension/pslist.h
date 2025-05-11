@@ -4,6 +4,7 @@
 #define MEGA_BYTES (1024 * 1024)
 #define GIGA_BYTES (1024 * 1024 * 1024)
 extern std::vector<ProcessInformation> processList;
+BOOL parsepslist(BOOL flag, PCSTR args);
 
 VOID displayBanner()
 {
@@ -45,7 +46,7 @@ VOID displayEntries(BOOL flag)
   {
     for (const auto &process : processList)
     {
-      Log("0x%016llx  %-20s  %-6u %-6u   %-8u %-8d\t\t%-8d\t\t%-36s\n",
+      Log("0x%p  %-20s  %-6u %-6u   %-8d %-8d\t\t%-8d\t\t%-36s\n",
           process.Eprocess, process.process_name, process.PID, process.PPID,
           process.ActiveThreads, process.VirtualSize / (MEGA_BYTES),
           process.PeakVirtualSize / (MEGA_BYTES), ConvertLargeIntegerToUTC(process.CreateTime).c_str());
@@ -53,8 +54,78 @@ VOID displayEntries(BOOL flag)
   }
 }
 
+VOID check_args(PCSTR args)
+{
+
+  if (processList.empty())
+  {
+    parsepslist(FALSE, args);
+  }
+
+  if (strcmp(args, "-p") == 0)
+  {
+    std::sort(processList.begin(), processList.end(),
+              [](const ProcessInformation &a, const ProcessInformation &b)
+              {
+                return a.PID < b.PID;
+              });
+  }
+  else if (strncmp(args, "-a", 2) == 0)
+  {
+    std::sort(processList.begin(), processList.end(),
+              [](const ProcessInformation &a, const ProcessInformation &b)
+              {
+                return a.ActiveThreads < b.ActiveThreads;
+              });
+  }
+  else if (strncmp(args, "-v", 2) == 0)
+  {
+    std::sort(processList.begin(), processList.end(),
+              [](const ProcessInformation &a, const ProcessInformation &b)
+              {
+                return a.VirtualSize < b.VirtualSize;
+              });
+  }
+  else if (strncmp(args, "-pvs", 4) == 0)
+  {
+    std::sort(processList.begin(), processList.end(),
+              [](const ProcessInformation &a, const ProcessInformation &b)
+              {
+                return a.PeakVirtualSize < b.PeakVirtualSize;
+              });
+  }
+  else if (strncmp(args, "-ct", 3) == 0)
+  {
+    std::sort(processList.begin(), processList.end(),
+              [](const ProcessInformation &a, const ProcessInformation &b)
+              {
+                return a.CreateTime.QuadPart < b.CreateTime.QuadPart;
+              });
+  }
+  else if (strcmp(args, "-n") == 0)
+  {
+    std::sort(processList.begin(), processList.end(),
+              [](const ProcessInformation &a, const ProcessInformation &b)
+              {
+                return strcmp(a.process_name, b.process_name) < 0;
+              });
+  }
+  else if (strncmp(args, "-nr", 3) == 0)
+  {
+    std::sort(processList.begin(), processList.end(),
+              [](const ProcessInformation &a, const ProcessInformation &b)
+              {
+                return strcmp(a.process_name, b.process_name) > 0;
+              });
+  }
+}
+
 BOOL parsepslist(BOOL flag, PCSTR args)
 {
+  if (!processList.empty())
+  {
+    processList.clear();
+  }
   auto process_head = GetExpression("nt!PsActiveProcessHead");
 
   if (process_head == 0x0)
@@ -103,62 +174,6 @@ BOOL parsepslist(BOOL flag, PCSTR args)
     processList.push_back(processInfo);
   }
 
-  if (strncmp(args, "-p", 2) == 0)
-  {
-    std::sort(processList.begin(), processList.end(),
-              [](const ProcessInformation &a, const ProcessInformation &b)
-              {
-                return a.PID < b.PID;
-              });
-  }
-  else if (strncmp(args, "-a", 2) == 0)
-  {
-    std::sort(processList.begin(), processList.end(),
-              [](const ProcessInformation &a, const ProcessInformation &b)
-              {
-                return a.ActiveThreads < b.ActiveThreads;
-              });
-  }
-  else if (strncmp(args, "-v", 2) == 0)
-  {
-    std::sort(processList.begin(), processList.end(),
-              [](const ProcessInformation &a, const ProcessInformation &b)
-              {
-                return a.VirtualSize < b.VirtualSize;
-              });
-  }
-  else if (strncmp(args, "-pvs", 4) == 0)
-  {
-    std::sort(processList.begin(), processList.end(),
-              [](const ProcessInformation &a, const ProcessInformation &b)
-              {
-                return a.PeakVirtualSize < b.PeakVirtualSize;
-              });
-  }
-  else if (strncmp(args, "-ct", 3) == 0)
-  {
-    std::sort(processList.begin(), processList.end(),
-              [](const ProcessInformation &a, const ProcessInformation &b)
-              {
-                return a.CreateTime.QuadPart < b.CreateTime.QuadPart;
-              });
-  }
-  else if (strncmp(args, "-n", 2) == 0)
-  {
-    std::sort(processList.begin(), processList.end(),
-              [](const ProcessInformation &a, const ProcessInformation &b)
-              {
-                return strcmp(a.process_name, b.process_name) < 0;
-              });
-  }
-  else if (strncmp(args, "-nr", 3) == 0)
-  {
-    std::sort(processList.begin(), processList.end(),
-              [](const ProcessInformation &a, const ProcessInformation &b)
-              {
-                return strcmp(a.process_name, b.process_name) > 0;
-              });
-  }
   if (flag)
   {
     displayBanner();

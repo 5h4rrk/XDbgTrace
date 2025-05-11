@@ -1,5 +1,6 @@
 #pragma once
 #include "dbgextension.h"
+#include "resolver.h"
 
 typedef enum CW32__LDR_DLL_LOAD_REASON
 {
@@ -108,7 +109,7 @@ VOID ParseDllNames(IDebugControl4 *control, IDebugDataSpaces4 *dataspaces,
 
 STDAPI _dlllist(IDebugClient *client, PCSTR args)
 {
-
+  LoadRequirements((std::basic_string_view<char>)PSLIST);
   CComQIPtr<IDebugControl4> control(client);
 
   auto hr = control->GetWindbgExtensionApis64(&ExtensionApis);
