@@ -17,7 +17,6 @@ Download the [DbgExtension.dll](x64/Release/DbgExtension.dll)
 ***Output***
 
 ```bash
-: kd> !pslist
 0: kd> !pslist
 Process            Process Name           PID    PPID   Threads		VS(MB)		PVS(MB)              CreateTime(UTC+0)
 =====================================================================================================================
