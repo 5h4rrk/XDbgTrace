@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dbgextension.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dbgextension.h" />
+    <ClInclude Include="dbgutil.h" />
+    <ClInclude Include="dlllist.h" />
+    <ClInclude Include="help.h" />
+    <ClInclude Include="magic_enum.h" />
+    <ClInclude Include="pdboffset.h" />
+    <ClInclude Include="psdetails.h" />
+    <ClInclude Include="pslist.h" />
+    <ClInclude Include="resolver.h" />
+    <ClInclude Include="utils.h" />
+    <ClInclude Include="threads.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DbgExtension.def" />
+  </ItemGroup>
+</Project>

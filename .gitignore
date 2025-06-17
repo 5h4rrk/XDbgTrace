@@ -1,3 +1,7 @@
 **/.vscode/
 DbgExtension/x64/
+x64/Release/*.exp
+x64/Release/*.lib
+x64/Release/*.pdb
 **/.vs/ 
+CppProperties.json  

@@ -5,6 +5,7 @@ It is a basic WinDbg extension that allows you to inspect process details. It of
 - `pslist`
 - `dlllist`
 - `psdetails`
+- `threads`
 
 > **Note:** This has only been tested on **Windows 10 (10.0.19041.1)**.It may not work as expected on other versions.
 
@@ -75,6 +76,32 @@ Loaded Requirements
 	DesktopInfo          : Winsta0\Default
 	StartingX            : 0
 	StartingY            : 0
+```
+
+***threads***: This command will display active threads of each process with their StartAddress, StartTime, ExitTime, TID and so on.
+
+***Output***
+
+```bash   
+0: kd> !threads
+ETHREAD                 PID      TID StartAddress        ProcessName              CreateTime(UTC)          ExitTime(UTC)           
+ffffc509b887c040          4       12 fffff8071e3e35e0    System                   1601-1 -1  0 :0 :0 .306      -                   
+ffffc509b8879080          4       16 fffff8071e3b44d0    System                   1601-1 -1  0 :0 :0 .306      -                   
+ffffc509b889c400          4       20 fffff8071e3b44d0    System                   1601-1 -1  0 :0 :0 .306      -                   
+ffffc509b8885040          4       24 fffff8071e7e8ca0    System                   1601-1 -1  0 :0 :0 .306      -                   
+ffffc509b8897340          4       28 fffff8071e7bea90    System                   2024-10-12 12:19:17.754      -                   
+ffffc509b89d6140          4       36 fffff8071e3cdf60    System                   2024-10-12 12:19:17.820      -                   
+ffffc509b89da140          4       40 fffff8071e3cc110    System                   2024-10-12 12:19:17.821      -        
+[[.....]]
+[[.....]]
+ffffc509c1f2b080       1372     7440 7ffe5ee02680        conhost.exe              2024-10-12 12:57:57.528      -                   
+ffffc509bd3d5080       1372     8088 7ffe5ee02680        conhost.exe              2024-10-12 12:57:57.529      -                   
+ffffc509bde32080       1372     8000 7ffe5ee02680        conhost.exe              2024-10-12 12:57:57.529      -                   
+ffffc509bc1e3080       1372     8104 7ffe5ee02680        conhost.exe              2024-10-12 12:57:57.542      -                   
+ffffc509b891c080       1372     2348 7ffe5ee02680        conhost.exe              2024-10-12 12:57:57.542      -                   
+ffffc509c1dd6080       1372     2924 7ffe5ee02680        conhost.exe              2024-10-12 12:57:57.578      -                   
+ffffc509c1bb3040       1372     5772 7ffe5ee02680        conhost.exe              2024-10-12 12:57:58.120      -                   
+
 ```
 
 ***help***: For help

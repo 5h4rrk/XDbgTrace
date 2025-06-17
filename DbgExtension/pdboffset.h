@@ -32,3 +32,10 @@ u64 FieldOffset(LPCSTR type, LPCSTR field)
   GetFieldOffset(type, field, &offset);
   return offset;
 }
+
+u64 EThreadFieldOffset(LPCSTR field)
+{
+	ULONG offset = 0x0;
+    GetFieldOffset("nt!_ETHREAD", field, &offset);
+    return offset;
+}

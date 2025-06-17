@@ -10,8 +10,14 @@ typedef UCHAR u8;
 
 #define INVALID_OFFSET 0x0
 #define ZERO_SIZE 0x0
-#define DPRINTF(...) printf(__VA_ARGS__)
+#define NEWLINE()       dprintf("\n")
+#define DPRINTF(...)    do {printf(__VA_ARGS__); }while(0);
+#define LOGINFO(...)    do {dprintf("[INFO] " __VA_ARGS__ );  NEWLINE(); } while(0);
+#define LOGWARN(...)    do {dprintf("[WARN] " __VA_ARGS__ );  NEWLINE(); } while(0);
+#define LOGERROR(...)   do {dprintf("[ERROR] " __VA_ARGS__ ); NEWLINE(); } while(0);
+
 #pragma comment(lib, "ntdll.lib")
+
 
 BOOL InitUnicodeString(_UNICODE_STRING *str)
 {

@@ -5,3 +5,4 @@ EXPORTS
 	pslist
 	dlllist
 	psdetails
+	threads

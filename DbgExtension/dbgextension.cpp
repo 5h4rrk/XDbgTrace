@@ -4,6 +4,7 @@
 #include "pslist.h"
 #include "dlllist.h"
 #include "psdetails.h"
+#include "threads.h"
 
 #pragma comment(lib, "dbgeng")
 
@@ -91,4 +92,9 @@ STDAPI dlllist(IDebugClient *client, PCSTR args)
 STDAPI psdetails(IDebugClient *client, PCSTR args)
 {
   return _psdetails(client, args);
+}
+
+STDAPI threads(IDebugClient *client, PCSTR args) 
+{
+  return _threads(client, args);
 }

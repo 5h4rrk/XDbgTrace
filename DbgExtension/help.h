@@ -9,6 +9,7 @@ VOID _help()
   dprintf("\tprocess [flags] - Process Information\n");
   dprintf("\tdlllist - Dll List\n");
   dprintf("\tpsdetails - displays detail info about process\n");
+  dprintf("\tthreads - dispalys active threads of each process\n");
 }
 
 VOID _process_help()
@@ -27,4 +28,10 @@ VOID psdetails_help()
 {
   dprintf("!psdetails\n");
   dprintf("\t\tdisplays detailed information about the process\n");
+}
+
+
+VOID _threads_help(){
+  dprintf("!threads\n");
+  dprintf("\t\tdisplays the threads");
 }

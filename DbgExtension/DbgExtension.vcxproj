@@ -172,6 +172,7 @@
     <ClInclude Include="psdetails.h" />
     <ClInclude Include="pslist.h" />
     <ClInclude Include="resolver.h" />
+    <ClInclude Include="threads.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
