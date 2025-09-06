@@ -1,4 +1,4 @@
-# WinDbg-Extension
+# XdbgTrace
 
 It is a basic WinDbg extension that allows you to inspect process details. It offers a collection of commands for inspecting processes and their related modules:
 
@@ -31,7 +31,7 @@ Process            Process Name           PID    PPID   Threads		VS(MB)		PVS(MB)
 ......
 ```
 
-- ***dlllist***: This command will list all loaded DLL files for each process. It enumerates the `_PEB` structure of each process, accesses the `_PEB_LDR_DATA`, and traverses the `InLoadOrderModuleList` to retrieve loaded modules.
+- ***!dlllist***: This command will list all loaded DLL files for each process. It enumerates the `_PEB` structure of each process, accesses the `_PEB_LDR_DATA`, and traverses the `InLoadOrderModuleList` to retrieve loaded modules.
 
 ***Output***
 
@@ -51,7 +51,7 @@ PID       	ProcessName         	DllName                                         
 .....
 ```
 
-***psdetails***: This command will show slight detailed information about the processes like `Eprocess`, `Cookie`, `Token`, `CommandLine`, `WindowTitle`, `DesktopInfo` etc.
+***!psdetails***: This command will show slight detailed information about the processes like `Eprocess`, `Cookie`, `Token`, `CommandLine`, `WindowTitle`, `DesktopInfo` etc.
 
 ***Output***
 
@@ -78,7 +78,7 @@ Loaded Requirements
 	StartingY            : 0
 ```
 
-***threads***: This command will display active threads of each process with their StartAddress, StartTime, ExitTime, TID and so on.
+***!threads***: This command will display active threads of each process with their StartAddress, StartTime, ExitTime, TID and so on.
 
 ***Output***
 
@@ -104,7 +104,7 @@ ffffc509c1bb3040       1372     5772 7ffe5ee02680        conhost.exe            
 
 ```
 
-***sessions***: This command will print all processes with the session id to which it belongs to. It pulls details like `SessionObject`, `SessionHandle`, `IoState`, `SessionId` & `CreateTime` from `_MM_SESSION_SPACE` structure.
+***!sessions***: This command will print all processes with the session id to which it belongs to. It pulls details like `SessionObject`, `SessionHandle`, `IoState`, `SessionId` & `CreateTime` from `_MM_SESSION_SPACE` structure.
 
 ```bash
 0: kd> !sessions
@@ -129,7 +129,7 @@ Loaded Requirements
 
 ```
 
-***envars**: This command retrieves the environment variables of each process by parsing `_PEB->ProcessParameters`, which is defined by the _RTL_USER_PROCESS_PARAMETERS structure containing fields like `Environment`, `EnvironmentSize`, and more.
+***!envars***: This command retrieves the environment variables of each process by parsing `_PEB->ProcessParameters`, which is defined by the _RTL_USER_PROCESS_PARAMETERS structure containing fields like `Environment`, `EnvironmentSize`, and more.
 
 ```bash
 ...
@@ -192,7 +192,7 @@ Loaded Requirements
 
 ```
 
-***help***: For help
+***!help***: For help
 
 ```bash
 0: kd> !help
@@ -201,6 +201,9 @@ DbgExtension Help
 	process [flags] - Process Information
 	dlllist - Dll List
 	psdetails - displays detail info about process
+	threads - dispalys active threads of each process
+	sessions - dispalys all the process with the sessions
+	envars - dumps the environment variables for all processes
 ```
 
 ```bash
