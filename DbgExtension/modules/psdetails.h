@@ -1,12 +1,13 @@
 #pragma once
-#include "dbgextension.h"
+#include "utils/dbgextension.h"
 #include "help.h"
-#include "resolver.h"
+#include "utils/resolver.h"
 
 extern std::vector<ProcessInformation> processList;
 extern VOID SwitchProcessContext(IDebugClient *client, IDebugControl4 *control, u64 address);
 
 #define DbgLog(control, fmt, ...) control->ControlledOutput(DEBUG_OUTCTL_THIS_CLIENT, DEBUG_OUTPUT_NORMAL, fmt, __VA_ARGS__)
+#define DbgLogWide(control, fmt, ...) control->ControlledOutputWide(DEBUG_OUTCTL_THIS_CLIENT, DEBUG_OUTPUT_NORMAL, fmt, __VA_ARGS__)
 
 extern "C" VOID
 InitString(_STRING *dest)

@@ -104,6 +104,94 @@ ffffc509c1bb3040       1372     5772 7ffe5ee02680        conhost.exe            
 
 ```
 
+***sessions***: This command will print all processes with the session id to which it belongs to. It pulls details like `SessionObject`, `SessionHandle`, `IoState`, `SessionId` & `CreateTime` from `_MM_SESSION_SPACE` structure.
+
+```bash
+0: kd> !sessions
+Loaded Requirements
+ SessionId          ProcessName      SessionObject      SessionHandle              IoState         CreateTime
+         0               System                  0                  0                 Null                    0
+         0             Registry                  0                  0                 Null                    0
+         0             smss.exe                  0                  0                 Null                    0
+         0            csrss.exe   ffffa607d3d516d0   ffffffff80000530         Disconnected              58a5ebb
+         0          wininit.exe   ffffa607d3d516d0   ffffffff80000530         Disconnected              58a5ebb
+         1            csrss.exe   ffffa607d3f39d00   ffffffff800005f4            Connected              5b1e7a3
+         0         services.exe   ffffa607d3d516d0   ffffffff80000530         Disconnected              58a5ebb
+         1         winlogon.exe   ffffa607d3f39d00   ffffffff800005f4            Connected              5b1e7a3
+         0            lsass.exe   ffffa607d3d516d0   ffffffff80000530         Disconnected              58a5ebb
+....
+....
+         0          svchost.exe   ffffa607d3d516d0   ffffffff80000530         Disconnected              58a5ebb
+         0       SearchProtocol   ffffa607d3d516d0   ffffffff80000530         Disconnected              58a5ebb
+         0       SearchFilterHo   ffffa607d3d516d0   ffffffff80000530         Disconnected              58a5ebb
+         2           DumpIt.exe   ffffa607d6b34c80   ffffffff80001af0             LoggedOn              dbd2e9f
+         2          conhost.exe   ffffa607d6b34c80   ffffffff80001af0             LoggedOn              dbd2e9f
+
+```
+
+***envars**: This command retrieves the environment variables of each process by parsing `_PEB->ProcessParameters`, which is defined by the _RTL_USER_PROCESS_PARAMETERS structure containing fields like `Environment`, `EnvironmentSize`, and more.
+
+```bash
+...
+...
+
+  Process=OneDrive.exe
+  PPID=0x174(372)
+  PID=0x3b4(948)
+  Peb=0x000000384083a000
+  Params=0x000001d8b38b22f0
+  Environment=0x000001d8b38b0fe0
+  EnvironmentSize=0x1306
+	=::=::\
+	ALLUSERSPROFILE=C:\ProgramData
+	APPDATA=C:\Users\testvm\AppData\Roaming
+	CLIENTNAME=TESTVM
+	CommonProgramFiles=C:\Program Files\Common Files
+	CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files
+	CommonProgramW6432=C:\Program Files\Common Files
+	COMPUTERNAME=DESKTOP-FPGOBQG
+	ComSpec=C:\Windows\system32\cmd.exe
+	DriverData=C:\Windows\System32\Drivers\DriverData
+	FPS_BROWSER_APP_PROFILE_STRING=Internet Explorer
+	FPS_BROWSER_USER_PROFILE_STRING=Default
+	HOMEDRIVE=C:
+	HOMEPATH=\Users\testvm
+	LOCALAPPDATA=C:\Users\testvm\AppData\Local
+	LOGONSERVER=\\DESKTOP-FPGOBQG
+	NUMBER_OF_PROCESSORS=2
+	OneDrive=C:\Users\testvm\OneDrive
+	OS=Windows_NT
+	Path=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\SysinternalsSuite;C:\Program Files (x86)\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files\010 Editor;C:\Users\testvm\AppData\Local\Programs\Python\Python313\Scripts\;C:\Users\testvm\AppData\Local\Programs\Python\Python313\;C:\Users\testvm\AppData\Local\Programs\Python\Launcher\;C:\Users\testvm\AppData\Local\Microsoft\WindowsApps;C:\Users\testvm\AppData\Local\Programs\Microsoft VS Code\bin;C:\SysinternalsSuite;
+	PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+	PROCESSOR_ARCHITECTURE=AMD64
+	PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 140 Stepping 1, GenuineIntel
+	PROCESSOR_LEVEL=6
+	PROCESSOR_REVISION=8c01
+	ProgramData=C:\ProgramData
+	ProgramFiles=C:\Program Files
+	ProgramFiles(x86)=C:\Program Files (x86)
+	ProgramW6432=C:\Program Files
+	PSModulePath=C:\Program Files\WindowsPowerShell\Modules;C:\Windows\system32\WindowsPowerShell\v1.0\Modules;C:\Program Files (x86)\Microsoft SQL Server\160\Tools\PowerShell\Modules\
+	PUBLIC=C:\Users\Public
+	QSG_RENDER_LOOP=basic
+	QT_ACCESSIBLE_SORT_TREE_CHILDREN=1
+	QT_ACCESSIBLE_TREEVIEW=1
+	QT_QUICK_BACKEND=softwarecontext
+	QT_SCALE_FACTOR=1
+	SESSIONNAME=RDP-Tcp#1
+	SystemDrive=C:
+	SystemRoot=C:\Windows
+	TEMP=C:\Users\testvm\AppData\Local\Temp
+	TMP=C:\Users\testvm\AppData\Local\Temp
+	USERDOMAIN=DESKTOP-FPGOBQG
+	USERDOMAIN_ROAMINGPROFILE=DESKTOP-FPGOBQG
+	USERNAME=testvm
+	USERPROFILE=C:\Users\testvm
+	windir=C:\Windows
+	....
+
+```
+
 ***help***: For help
 
 ```bash

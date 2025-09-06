@@ -6,16 +6,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dbgextension.h" />
-    <ClInclude Include="dbgutil.h" />
-    <ClInclude Include="dlllist.h" />
-    <ClInclude Include="help.h" />
-    <ClInclude Include="magic_enum.h" />
-    <ClInclude Include="pdboffset.h" />
-    <ClInclude Include="psdetails.h" />
-    <ClInclude Include="pslist.h" />
-    <ClInclude Include="resolver.h" />
-    <ClInclude Include="utils.h" />
-    <ClInclude Include="threads.h" />
+    <ClInclude Include="modules/envars.h" />
+    <ClInclude Include="utils/processutils.h" />
+    <ClInclude Include="modules/dlllist.h" />
+    <ClInclude Include="modules/help.h" />
+    <ClInclude Include="external/magic_enum.h" />
+    <ClInclude Include="modules/objects.h" />
+    <ClInclude Include="utils/pdboffset.h" />
+    <ClInclude Include="modules/psdetails.h" />
+    <ClInclude Include="modules/pslist.h" />
+    <ClInclude Include="utils/resolver.h" />
+    <ClInclude Include="modules/sessions.h" />
+    <ClInclude Include="modules/threads.h" />
+    <ClInclude Include="utils/utils.h" />
+    <ClInclude Include="utils/xdbg.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DbgExtension.def" />

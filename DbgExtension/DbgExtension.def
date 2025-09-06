@@ -6,3 +6,6 @@ EXPORTS
 	dlllist
 	psdetails
 	threads
+	sessions
+	objects
+	envars 

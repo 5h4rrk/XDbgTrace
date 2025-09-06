@@ -1,0 +1,1 @@
+kdx64.exe -z C:\Users\testuser\OneDrive\Desktop\DESKTOP-FPGOBQG-20250802-065651.dmp -c ".load E:\DbgExtension\x64\Release\DbgExtension.dll;!pslist;!psdetails;!sessions;!envars;!dlllist;!threads;q"

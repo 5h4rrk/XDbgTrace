@@ -1,5 +1,5 @@
 #pragma once
-#include "dbgextension.h"
+#include "utils/dbgextension.h"
 
 #define MEGA_BYTES (1024 * 1024)
 #define GIGA_BYTES (1024 * 1024 * 1024)
@@ -30,9 +30,10 @@ ConvertLargeIntegerToUTC(LARGE_INTEGER largeInt)
   SYSTEMTIME stUtc;
   if (FileTimeToSystemTime(&ft, &stUtc))
   {
-    return std::format("{:^4}-{:^2}-{:^2} {:^2}:{:^2}:{:^2}.{:^3}",
-                       stUtc.wYear, stUtc.wMonth, stUtc.wDay,
-                       stUtc.wHour, stUtc.wMinute, stUtc.wSecond, stUtc.wMilliseconds);
+    return std::format("{:04}-{:02}-{:02} {:02}:{:02}:{:02}.{:03}", stUtc.wYear,
+                       stUtc.wMonth, stUtc.wDay, stUtc.wHour, stUtc.wMinute,
+                       stUtc.wSecond, stUtc.wMilliseconds);
+
   }
   else
   {

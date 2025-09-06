@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <winternl.h>
+#include <string_view>
 
 typedef ULONG64 u64;
 typedef ULONG32 u32;
@@ -8,16 +9,58 @@ typedef UINT16 u16;
 typedef ULONG ul;
 typedef UCHAR u8;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef __cplusplus
+    using Buffer8 = char *;
+    using Buffer16 = uint16_t *;
+    using BufferRaw = void *;
+    using StatusCode = BOOL;
+#else
+    typedef char *Buffer8;
+    typedef uint16_t *Buffer16;
+    typedef void *BufferRaw;
+    typedef BOOL StatusCode;
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
 #define INVALID_OFFSET 0x0
-#define ZERO_SIZE 0x0
+#define ZERO_SIZE INVALID_OFFSET
+
 #define NEWLINE()       dprintf("\n")
 #define DPRINTF(...)    do {printf(__VA_ARGS__); }while(0);
 #define LOGINFO(...)    do {dprintf("[INFO] " __VA_ARGS__ );  NEWLINE(); } while(0);
 #define LOGWARN(...)    do {dprintf("[WARN] " __VA_ARGS__ );  NEWLINE(); } while(0);
 #define LOGERROR(...)   do {dprintf("[ERROR] " __VA_ARGS__ ); NEWLINE(); } while(0);
 
-#pragma comment(lib, "ntdll.lib")
+#define STRINGIFY(x) #x
+#define TEST_LOG_FORMATTER_PAD(x) STRINGIFY([TEST x : 0x%p\n)
+#define TEST_LOG_FORMATTER(x) STRINGIFY([DEBUG] x : 0x% p\n)
+#define TEST_LOG(x) dprintf(TEST_LOG_FORMATTER(x), x)
 
+#define TEST_LOG_STRING_FORMATTER(x) STRINGIFY([DEBUG] x : %s\n)
+#define TEST_LOG_STR(x) dprintf(TEST_LOG_STRING_FORMATTER(x), x)
+
+#define TEST_LOG_INT_FORMATTER(x) STRINGIFY([DEBUG] x : %d\n)
+#define TEST_LOG_INT(x) dprintf(TEST_LOG_INT_FORMATTER(x), x)
+
+#define DEBUG_MODE 0x1 // 0x0 : OFF , 0x1 : ON
+
+#define DbgLog(control, fmt, ...)                                              \
+  control->ControlledOutput(DEBUG_OUTCTL_THIS_CLIENT, DEBUG_OUTPUT_NORMAL,     \
+                            fmt, __VA_ARGS__)
+#define DbgLogWide(control, fmt, ...)                                          \
+  control->ControlledOutputWide(DEBUG_OUTCTL_THIS_CLIENT, DEBUG_OUTPUT_NORMAL, \
+                                fmt, __VA_ARGS__)
+
+
+
+#pragma comment(lib, "ntdll.lib")
 
 BOOL InitUnicodeString(_UNICODE_STRING *str)
 {
@@ -302,3 +345,23 @@ void InitPebInformation(PebInformation *PebInfo)
   PebInfo->ImageBaseAddress = 0x0;
   memset(static_cast<void *>(&PebInfo->PebLdrData), 0, sizeof(PebInfo->PebLdrData));
 }
+
+typedef struct {
+  u32 SessionId;
+  u64 SessionObject;
+  u64 SessionObjectHandle;
+  u64 CreateTime;
+  u32 IoState;
+  std::string_view userName;
+  std::string_view domainName;
+  std::string_view sessionName;
+} SessionInfo;
+
+void InitSessionInfo(SessionInfo* sessionInfo) {
+  sessionInfo->SessionId = 0x0;
+  sessionInfo->SessionObject = 0x0;
+  sessionInfo->SessionObjectHandle = 0x0;
+  sessionInfo->CreateTime = 0x0;
+  sessionInfo->IoState = 0x0;
+}
+

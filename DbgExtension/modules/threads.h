@@ -1,25 +1,29 @@
 #pragma once
-#include "dbgextension.h"
-#include "resolver.h"
+#include "utils/dbgextension.h"
+#include "utils/resolver.h"
 
 extern std::vector<ProcessInformation> processList;
 extern std::string ConvertLargeIntegerToUTC(LARGE_INTEGER largeInt);
 extern VOID SwitchProcessContext(IDebugClient *client, IDebugControl4 *control, u64 address);
 
-BOOL isValidAddress(u64 address)
-{
-  //  LOGINFO("Valid Address %p", (address )& 0x0f);
-  if (!((address) & 0x0f))
-  {
+#define INVALID_START_ADDRESS 0x0
+
+BOOL isValidStartAddress(u64 start_address) {
+  if (start_address != INVALID_START_ADDRESS) {
     return TRUE;
   }
   return FALSE;
 }
 
-STDAPI _threads(IDebugClient *client, PCSTR args)
-{
-  if (strcmp(args, "-h") == 0)
-  {
+BOOL isValidAddress(u64 address) {
+  if (!((address) & 0x0f)) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+STDAPI _threads(IDebugClient *client, PCSTR args) {
+  if (strcmp(args, "-h") == 0) {
     _threads_help();
     return S_OK;
   }
@@ -30,19 +34,16 @@ STDAPI _threads(IDebugClient *client, PCSTR args)
   CComQIPtr<IDebugControl4> control(client);
 
   auto hr = control->GetWindbgExtensionApis64(&ExtensionApis);
-  if (FAILED(hr))
-  {
+  if (FAILED(hr)) {
     return hr;
   }
 
   IDebugDataSpaces4 *dataspaces = nullptr;
   hr = client->QueryInterface(__uuidof(IDebugDataSpaces4), (void **)&dataspaces);
-  if (hr != S_OK)
-  {
+  if (hr != S_OK) {
     return E_FAIL;
   }
 
-  // Load the pslist
   LoadRequirements((std::basic_string_view<char>)PSLIST);
   ULONG bytesRead = 0x0;
   ULONG64 Flink = 0x0;
@@ -53,7 +54,8 @@ STDAPI _threads(IDebugClient *client, PCSTR args)
   _LARGE_INTEGER ExitTime;
   ULONG64 ThreadId = 0x0;
   ULONG64 StartAddress = 0x0;
-    Log("%-18s %8s %8s %-18s  %-24s %-24s %-24s\n",
+
+  Log("%-18s %8s %8s %-18s  %-24s %-24s %-24s\n",
     "ETHREAD",
     "PID",
     "TID",
@@ -62,8 +64,7 @@ STDAPI _threads(IDebugClient *client, PCSTR args)
     "CreateTime(UTC)",
     "ExitTime(UTC)");
     
-  for (const auto &process : processList)
-  {
+  for (const auto &process : processList) {
     // Iterating threads
     threadListHead = EProcessFieldOffset("ThreadListHead");
     // LOGINFO("ThreadListHead -> [ %p ]\n", threadListHead);
@@ -80,8 +81,7 @@ STDAPI _threads(IDebugClient *client, PCSTR args)
     // LOGINFO("Active Threads for %s : %d", process.process_name, ActiveThreads);
 
 
-    for (int i=0; i< ActiveThreads; i++)
-    {
+    for (int i=0; i< ActiveThreads; i++) {
       NextEthread = dataspaces->ReadVirtual(Flink, &NextEthread, sizeof(&NextEthread), &bytesRead);
       Ethread = Flink - EThreadFieldOffset("ThreadListEntry");
 
@@ -97,7 +97,7 @@ STDAPI _threads(IDebugClient *client, PCSTR args)
       dataspaces->ReadVirtual(Ethread + EThreadFieldOffset("ThreadListEntry") , &NextEthread, sizeof(&NextEthread), &bytesRead);
       Flink = NextEthread;
 
-      if (isValidAddress(Ethread)) {
+      if (isValidAddress(Ethread) && isValidStartAddress(StartAddress)) {
         Log("%-18p %8d %8d %-18p  %-24s %-24s %-24s\n",
             Ethread,
             process.PID,
@@ -109,7 +109,5 @@ STDAPI _threads(IDebugClient *client, PCSTR args)
       }
     }
   }
-  // Traverse the list entry and print the details
-
   return S_OK;
 }

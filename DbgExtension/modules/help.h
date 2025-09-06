@@ -10,6 +10,8 @@ VOID _help()
   dprintf("\tdlllist - Dll List\n");
   dprintf("\tpsdetails - displays detail info about process\n");
   dprintf("\tthreads - dispalys active threads of each process\n");
+  dprintf("\tsessions - dispalys all the process with the sessions\n");
+  dprintf("\tenvars - dumps the environment variables for all processes\n");
 }
 
 VOID _process_help()
