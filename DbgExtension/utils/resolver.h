@@ -1,6 +1,6 @@
 #pragma once
 #include "dbgextension.h"
-#include "pslist.h"
+#include "modules/pslist.h"
 
 extern std::vector<ProcessInformation> processList;
 

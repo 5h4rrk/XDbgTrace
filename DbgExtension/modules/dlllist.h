@@ -1,6 +1,7 @@
 #pragma once
-#include "dbgextension.h"
-#include "resolver.h"
+#include "utils/dbgextension.h"
+#include "utils/resolver.h"
+#include "utils/processutils.h"
 
 typedef enum CW32__LDR_DLL_LOAD_REASON
 {

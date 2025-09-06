@@ -31,34 +31,37 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="utils.h">
+    <ClInclude Include="utils/utils.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="dbgutil.h">
+    <ClInclude Include="utils/dbgutil.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="help.h">
+    <ClInclude Include="modules/help.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="dbgextension.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="dlllist.h">
+    <ClInclude Include="modules/dlllist.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="pslist.h">
+    <ClInclude Include="modules/pslist.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="magic_enum.h">
+    <ClInclude Include="external/magic_enum.h">
       <Filter>Source Files\magic_enum</Filter>
     </ClInclude>
-    <ClInclude Include="psdetails.h">
+    <ClInclude Include="modules/psdetails.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="resolver.h">
+    <ClInclude Include="utils/resolver.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="pdboffset.h">
+    <ClInclude Include="utils/pdboffset.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="modules/envars.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
