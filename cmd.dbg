@@ -1,5 +1,0 @@
-.load E:\0xsh4rk\WindowsKernelProgramming\DbgExt\DbgExtension\x64\Release\DbgExtension.dll
-!sessions
-.unload E:\0xsh4rk\WindowsKernelProgramming\DbgExt\DbgExtension\x64\Release\DbgExtension.dll
-
-$$ $$>a< E:\0xsh4rk\WindowsKernelProgramming\DbgExt\DbgExtension\cmd.dbg
