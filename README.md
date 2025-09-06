@@ -1,4 +1,4 @@
-# WinDbg-Extension
+# XdbgTrace
 
 It is a basic WinDbg extension that allows you to inspect process details. It offers a collection of commands for inspecting processes and their related modules:
 
@@ -129,7 +129,7 @@ Loaded Requirements
 
 ```
 
-***envars**: This command retrieves the environment variables of each process by parsing `_PEB->ProcessParameters`, which is defined by the _RTL_USER_PROCESS_PARAMETERS structure containing fields like `Environment`, `EnvironmentSize`, and more.
+***envars***: This command retrieves the environment variables of each process by parsing `_PEB->ProcessParameters`, which is defined by the `_RTL_USER_PROCESS_PARAMETERS` structure containing fields like `Environment`, `EnvironmentSize`, and more.
 
 ```bash
 ...
@@ -201,6 +201,9 @@ DbgExtension Help
 	process [flags] - Process Information
 	dlllist - Dll List
 	psdetails - displays detail info about process
+	threads - dispalys active threads of each process
+	sessions - dispalys all the process with the sessions
+	envars - dumps the environment variables for all processes
 ```
 
 ```bash
